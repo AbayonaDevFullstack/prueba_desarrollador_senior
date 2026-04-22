@@ -18,15 +18,15 @@ def get_task_by_id(db: Session, task_id: int) -> Optional[Task]:
 def get_all_tasks(db: Session, status: Optional[str] = None) -> list[Task]:
     query = db.query(Task)
     if status is not None:
-        query = query.filter(Task.status != status)
+        query = query.filter(Task.status == status)
     return query.all()
 
 
 def update_task(db: Session, task: Task, data: dict) -> Task:
     for field, value in data.items():
         setattr(task, field, value)
-    db.refresh(task)
     db.commit()
+    db.refresh(task)
     return task
 
 
