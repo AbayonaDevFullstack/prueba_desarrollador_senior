@@ -8,7 +8,7 @@ from app.services import task_service
 router = APIRouter()
 
 
-@router.post("/", response_model=TaskResponse)
+@router.post("/", response_model=TaskResponse, status_code=201)
 def create_task(payload: TaskCreate, db: Session = Depends(get_db)):
     return task_service.create_task(db, payload.model_dump())
 
